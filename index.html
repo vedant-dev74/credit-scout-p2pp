@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Credit Scout — Professional P2P Lending Matchmaker Dashboard</title>
+  <meta name="description" content="Professional fintech dashboard for peer-to-peer micro-lending. Personalize your risk appetite and investment amount to discover the top 5 matching borrowers with live estimated ROI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Mobile Sidebar Overlay Backdrop -->
+  <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="dashboard-wrapper">
+    <!-- Responsive Fintech Sidebar -->
+    <aside id="dashboard-sidebar" class="dashboard-sidebar" aria-label="Main Navigation">
+      <div class="sidebar-header">
+        <div class="brand">
+          <div class="brand-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M12 6v6l4 2"></path>
+              <path d="M16 16l4-4"></path>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <div class="brand-title">Credit Scout</div>
+            <div class="brand-subtitle">Fintech Matchmaker</div>
+          </div>
+        </div>
+        <button id="sidebar-close-btn" class="sidebar-close-btn" aria-label="Close menu">&times;</button>
+      </div>
+
+      <!-- Sidebar Navigation Links -->
+      <nav class="sidebar-nav">
+        <div class="nav-group-title">Main Portal</div>
+        <button type="button" id="nav-item-matchmaker" class="sidebar-nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Matchmaker Dashboard</span>
+        </button>
+        <button type="button" id="nav-item-directory" class="sidebar-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>All 25 Borrowers Pool</span>
+          <span class="nav-pill">25</span>
+        </button>
+        <button type="button" id="nav-item-analytics" class="sidebar-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          <span>Risk vs Return Matrix</span>
+        </button>
+        <button type="button" id="nav-item-credit" class="sidebar-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <span>Credit Score Overview</span>
+        </button>
+        <button type="button" id="nav-item-activity" class="sidebar-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+          <span>Simulation Activity</span>
+        </button>
+
+        <div class="nav-group-title" style="margin-top: 1.5rem;">Documentation</div>
+        <button type="button" id="nav-item-methodology" class="sidebar-nav-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>Methodology & Disclaimers</span>
+        </button>
+      </nav>
+
+      <!-- Sidebar Mini Portfolio Card -->
+      <div class="sidebar-portfolio-card">
+        <div class="sidebar-portfolio-header">
+          <span class="portfolio-label">Lender Stance</span>
+          <span class="portfolio-status-dot"></span>
+        </div>
+        <div class="sidebar-portfolio-amount" id="sidebar-amount-val">₹25,000</div>
+        <div class="sidebar-portfolio-sub">
+          <span id="sidebar-risk-label">Medium Risk</span> • <span id="sidebar-roi-label">+9.4% Est. ROI</span>
+        </div>
+      </div>
+
+      <!-- Sidebar Footer Status -->
+      <div class="sidebar-footer">
+        <div class="engine-status">
+          <span class="status-dot"></span>
+          <span>Deterministic Engine Online</span>
+        </div>
+        <div class="version-tag">Core v2.4 • Pure Vanilla Stack</div>
+      </div>
+    </aside>
+
+    <!-- Main Content Canvas -->
+    <div class="dashboard-main-shell">
+      <!-- Top Navigation Bar -->
+      <header class="app-header">
+        <div class="header-container">
+          <div class="header-left">
+            <button id="sidebar-toggle-btn" class="sidebar-toggle-btn" aria-label="Open Navigation Sidebar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            <div class="topbar-breadcrumbs">
+              <span class="bc-root">Lending Dashboard</span>
+              <span class="bc-sep">/</span>
+              <span class="bc-current">Live Borrower Matchmaker</span>
+            </div>
+          </div>
+
+          <div class="header-actions">
+            <!-- Quick Strategy Presets -->
+            <div class="preset-dropdown-wrapper">
+              <label for="investor-preset" class="sr-only">Quick Presets</label>
+              <select id="investor-preset" class="preset-select" aria-label="Investor profile preset">
+                <option value="" disabled selected>⚡ Strategy Presets</option>
+                <option value="conservative">🛡️ Conservative Saver (Low Risk • ₹10,000)</option>
+                <option value="balanced">⚖️ Balanced Growth (Medium Risk • ₹25,000)</option>
+                <option value="aggressive">🚀 High Yield Seeker (High Risk • ₹50,000)</option>
+                <option value="micro">🌱 Micro Supporter (Low Risk • ₹5,000)</option>
+                <option value="max">💎 Maximum Allocation (Medium Risk • ₹1,00,000)</option>
+              </select>
+            </div>
+
+            <!-- Reset Button in Header -->
+            <button id="header-reset-btn" class="secondary-btn" title="Reset all inputs to default settings" aria-label="Reset all filters">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+              <span>Reset</span>
+            </button>
+
+            <!-- Theme Toggle -->
+            <button id="theme-toggle" class="icon-btn" title="Toggle Theme" aria-label="Toggle Theme">
+              <svg class="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+              <svg class="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+              </svg>
+            </button>
+
+            <!-- Lender Profile Badge -->
+            <div class="user-profile-pill">
+              <div class="user-avatar">CS</div>
+              <div class="user-meta">
+                <span class="user-name">Retail Lender</span>
+                <span class="user-role">Verified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Dashboard Content -->
+      <main class="app-main">
+        <div class="content-wrapper">
+
+          <!-- Hero Executive Banner -->
+          <section class="hero-banner" aria-label="Project Overview">
+            <div class="hero-content">
+              <div class="hero-badge-row">
+                <span class="status-indicator-live">
+                  <span class="pulse-dot"></span> Live Matchmaker Active
+                </span>
+                <span class="demo-tag">Institutional P2P Scoring Engine • Verified Candidate Pool</span>
+              </div>
+              <h1 class="hero-title">Match Your Capital with Verified Micro-Borrowers</h1>
+              <p class="hero-desc">
+                Credit Scout deterministically ranks 25 verified candidates based on your personal risk appetite and investment amount, instantly projecting risk-adjusted net yield and cash flow schedules.
+              </p>
+            </div>
+          </section>
+
+          <!-- Top Executive Summary Cards (5-KPI Strip) -->
+          <section class="strategy-summary-bar" aria-label="Executive KPI Overview">
+            <div class="summary-metric">
+              <div class="metric-icon-bubble">📈</div>
+              <div class="metric-meta">
+                <span class="metric-label">Top 5 Avg. Net ROI</span>
+                <span id="avg-roi-stat" class="metric-value text-success">+9.4%</span>
+                <span class="metric-subtext">Annualized yield projection</span>
+              </div>
+            </div>
+
+            <div class="summary-metric">
+              <div class="metric-icon-bubble">💰</div>
+              <div class="metric-meta">
+                <span class="metric-label">Est. 12M Net Profit</span>
+                <span id="est-profit-stat" class="metric-value text-accent">+₹2,350</span>
+                <span class="metric-subtext" id="profit-calc-note">on ₹25,000 deployed</span>
+              </div>
+            </div>
+
+            <div class="summary-metric">
+              <div class="metric-icon-bubble">🛡️</div>
+              <div class="metric-meta">
+                <span class="metric-label">Avg. Repayment Rate</span>
+                <span id="avg-prob-stat" class="metric-value">90.2%</span>
+                <span class="metric-subtext">Modeled security floor</span>
+              </div>
+            </div>
+
+            <div class="summary-metric">
+              <div class="metric-icon-bubble">💳</div>
+              <div class="metric-meta">
+                <span class="metric-label">Top 5 Avg. FICO</span>
+                <span id="avg-credit-score-stat" class="metric-value">712 FICO</span>
+                <span class="metric-subtext" id="credit-tier-subtext">Prime Tier Quality</span>
+              </div>
+            </div>
+
+            <div class="summary-metric">
+              <div class="metric-icon-bubble">👥</div>
+              <div class="metric-meta">
+                <span class="metric-label">Eligible Matches</span>
+                <span id="eligible-count-stat" class="metric-value">25 / 25</span>
+                <span class="metric-subtext">Scouted candidate pool</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Investor Control Center -->
+          <section class="control-panel-card" aria-label="Investor Controls">
+            <div class="panel-header">
+              <div class="panel-title-area">
+                <span class="tag-label">Investor Settings</span>
+                <h2 class="panel-heading">Configure Your Investment Preferences</h2>
+              </div>
+              <div class="panel-actions-top">
+                <button id="reset-filters-btn" class="text-btn" title="Reset preferences to default values">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                    <path d="M3 3v5h5"></path>
+                  </svg>
+                  <span>Reset Filters</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="controls-grid">
+
+              <!-- CONTROL 1: Investment Amount (₹1,000 to ₹1,00,000) -->
+              <div class="control-card" id="control-amount-group">
+                <div class="control-header">
+                  <label for="amount-input" class="control-label">
+                    <span>Investment Amount (₹)</span>
+                    <span class="control-hint">Sensible Demo Range: ₹1,000 to ₹1,00,000</span>
+                  </label>
+                  <div class="amount-display-tag">
+                    <span id="amount-formatted">₹25,000</span>
+                  </div>
+                </div>
+
+                <!-- Numeric Input with Rupee Prefix -->
+                <div class="amount-input-wrapper">
+                  <span class="currency-symbol" aria-hidden="true">₹</span>
+                  <input
+                    type="number"
+                    id="amount-input"
+                    min="1000"
+                    max="100000"
+                    step="1000"
+                    value="25000"
+                    class="styled-number-input"
+                    aria-label="Investment amount in Indian Rupees"
+                  />
+                  <span class="currency-suffix">INR</span>
+                </div>
+
+                <!-- Validation Error Message Area -->
+                <div id="amount-validation-msg" class="validation-msg hidden" role="alert"></div>
+
+                <!-- Interactive Slider for Investment Amount -->
+                <div class="slider-container" style="margin-top: 14px;">
+                  <div class="slider-top-labels">
+                    <span class="slider-sublabel">Amount Slider</span>
+                    <span class="slider-val-readout" id="slider-amount-readout">₹25,000</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="amount-slider"
+                    min="1000"
+                    max="100000"
+                    step="1000"
+                    value="25000"
+                    class="styled-slider"
+                    aria-label="Investment amount slider"
+                  />
+                  <div class="slider-scale">
+                    <span class="scale-point" data-val="1000">₹1k</span>
+                    <span class="scale-point" data-val="25000">₹25k</span>
+                    <span class="scale-point" data-val="50000">₹50k</span>
+                    <span class="scale-point" data-val="75000">₹75k</span>
+                    <span class="scale-point" data-val="100000">₹1,00k</span>
+                  </div>
+                </div>
+
+                <!-- Quick Amount Chips -->
+                <div class="chip-row-label">Quick Capital Allocations:</div>
+                <div class="chip-row" aria-label="Quick Investment Amount Chips">
+                  <button type="button" class="amount-chip" data-amount="5000">₹5,000</button>
+                  <button type="button" class="amount-chip" data-amount="10000">₹10,000</button>
+                  <button type="button" class="amount-chip active" data-amount="25000">₹25,000</button>
+                  <button type="button" class="amount-chip" data-amount="50000">₹50,000</button>
+                  <button type="button" class="amount-chip" data-amount="100000">₹1,00,000</button>
+                </div>
+              </div>
+
+              <!-- CONTROL 2: Risk Appetite Selector (Low, Medium, High) -->
+              <div class="control-card" id="control-risk-group">
+                <div class="control-header">
+                  <div class="control-label">
+                    <span>Risk Appetite Profile</span>
+                    <span class="control-hint">Select your preferred risk-return balance</span>
+                  </div>
+                  <div id="risk-badge" class="risk-badge badge-medium">
+                    <span class="badge-dot"></span>
+                    <span id="risk-badge-text">Medium Risk</span>
+                  </div>
+                </div>
+
+                <!-- Three Risk Profile Selectors -->
+                <div class="risk-profiles-grid" role="radiogroup" aria-label="Risk Appetite Profiles">
+                  <!-- Profile: Low -->
+                  <button type="button" class="risk-profile-card" data-profile="low" role="radio" aria-checked="false">
+                    <div class="profile-card-top">
+                      <span class="profile-icon">🛡️</span>
+                      <span class="profile-title">Low Risk</span>
+                    </div>
+                    <div class="profile-subtitle">Capital Preservation</div>
+                    <div class="profile-metrics">
+                      <span>Score: <strong>730+</strong></span>
+                      <span>Est: <strong>7%–9%</strong></span>
+                    </div>
+                    <p class="profile-desc">Prioritizes high credit scores and low default risk.</p>
+                  </button>
+
+                  <!-- Profile: Medium -->
+                  <button type="button" class="risk-profile-card active" data-profile="medium" role="radio" aria-checked="true">
+                    <div class="profile-card-top">
+                      <span class="profile-icon">⚖️</span>
+                      <span class="profile-title">Medium Risk</span>
+                    </div>
+                    <div class="profile-subtitle">Balanced Growth</div>
+                    <div class="profile-metrics">
+                      <span>Score: <strong>660–725</strong></span>
+                      <span>Est: <strong>9%–12%</strong></span>
+                    </div>
+                    <p class="profile-desc">Balances competitive yield with solid repayment reliability.</p>
+                  </button>
+
+                  <!-- Profile: High -->
+                  <button type="button" class="risk-profile-card" data-profile="high" role="radio" aria-checked="false">
+                    <div class="profile-card-top">
+                      <span class="profile-icon">🚀</span>
+                      <span class="profile-title">High Risk</span>
+                    </div>
+                    <div class="profile-subtitle">Yield Maximizer</div>
+                    <div class="profile-metrics">
+                      <span>Score: <strong>580–640</strong></span>
+                      <span>Est: <strong>12%–15%</strong></span>
+                    </div>
+                    <p class="profile-desc">Allows higher credit risk for potentially higher returns.</p>
+                  </button>
+                </div>
+
+                <!-- Fine-Tuning Continuous Risk Slider -->
+                <div class="fine-tuning-wrapper">
+                  <div class="slider-top-labels">
+                    <span class="slider-sublabel">Risk Fine-Tuning Index</span>
+                    <span class="slider-val-readout" id="slider-risk-readout">Index: 50 / 100</span>
+                  </div>
+                  <input
+                    type="range"
+                    id="risk-slider"
+                    min="0"
+                    max="100"
+                    value="50"
+                    step="1"
+                    class="styled-slider"
+                    aria-label="Risk appetite fine-tuning slider"
+                  />
+                  <div class="slider-scale">
+                    <span class="scale-point" data-val="15">Low Risk</span>
+                    <span class="scale-point" data-val="50">Medium Risk</span>
+                    <span class="scale-point" data-val="85">High Risk</span>
+                  </div>
+                </div>
+
+                <!-- Contextual Strategy Explanation -->
+                <div class="risk-explanation-callout" id="risk-impact-box">
+                  <div class="callout-icon">ℹ️</div>
+                  <div class="callout-content">
+                    <strong id="risk-impact-title">How Medium Risk Affects Matching:</strong>
+                    <p id="risk-impact-desc">
+                      The algorithm assigns balanced weights (40% Safety, 40% Net Return, 20% Alignment), favoring borrowers with 86%–92% repayment security and attractive 11%–14% interest rates.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Secondary Eligibility & Filter Row -->
+            <div class="filter-toolbar">
+              <div class="filter-toolbar-left">
+                <span class="filter-toolbar-label">Eligibility Criteria:</span>
+
+                <!-- Strict Risk Category Match Toggle -->
+                <label class="toggle-control" title="When enabled, only borrowers strictly matching the chosen risk tier qualify">
+                  <input type="checkbox" id="strict-tier-toggle" />
+                  <span class="toggle-slider"></span>
+                  <span class="toggle-label">Strict Tier Filtering</span>
+                </label>
+
+                <!-- Minimum Credit Score Filter -->
+                <div class="filter-dropdown-inline">
+                  <label for="credit-score-filter" class="filter-inline-label">Min Credit Score:</label>
+                  <select id="credit-score-filter" class="filter-inline-select">
+                    <option value="0">All Scores (580+)</option>
+                    <option value="650">650+ (Fair & Above)</option>
+                    <option value="700">700+ (Good & Above)</option>
+                    <option value="740">740+ (Very Good)</option>
+                    <option value="770">770+ (Elite Only)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="filter-toolbar-right">
+                <span id="active-matches-pill" class="status-count-pill">
+                  <strong>25</strong> Borrowers Eligible
+                </span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Two-Column Grid: Visual Analytics & Credit Score Overview -->
+          <div class="analytics-double-grid">
+            <!-- Visual Analytics & Chart Section -->
+            <section class="visual-analytics-card" id="analytics-section" aria-label="Risk and Return Visualizer">
+              <div class="analytics-header">
+                <div>
+                  <span class="tag-label">Data Visualization</span>
+                  <h3 class="analytics-heading">Risk vs. Estimated Return Tradeoff Matrix</h3>
+                  <p class="analytics-sub">Each bubble represents a borrower. Highlighted markers indicate your current Top 5 Recommended Matches.</p>
+                </div>
+                <div class="chart-legend">
+                  <span class="legend-item"><span class="legend-dot dot-low"></span> Low Risk</span>
+                  <span class="legend-item"><span class="legend-dot dot-med"></span> Medium Risk</span>
+                  <span class="legend-item"><span class="legend-dot dot-high"></span> High Risk</span>
+                  <span class="legend-item"><span class="legend-dot dot-top5"></span> Top 5 Selected</span>
+                </div>
+              </div>
+
+              <div class="chart-container">
+                <svg id="scatter-chart" viewBox="0 0 800 280" class="responsive-svg-chart" aria-label="Scatter chart of Default Risk vs Expected Net Return">
+                  <!-- Chart rendered dynamically via JS -->
+                </svg>
+              </div>
+
+              <!-- Portfolio Allocation Breakdown Visual Bar -->
+              <div class="capital-allocation-strip">
+                <div class="allocation-strip-label">
+                  <span>Projected Capital Outcome for <strong id="alloc-capital-label">₹25,000</strong>:</span>
+                  <span id="alloc-total-payout" class="text-accent">Total Payout: <strong>₹27,350</strong></span>
+                </div>
+                <div class="allocation-bar-track">
+                  <div id="bar-principal" class="alloc-segment segment-principal" style="width: 88%" title="Principal Capital">Principal (100%)</div>
+                  <div id="bar-net-roi" class="alloc-segment segment-profit" style="width: 9.4%" title="Projected Net Profit">+₹2,350 Net Profit</div>
+                  <div id="bar-risk-loss" class="alloc-segment segment-loss" style="width: 2.6%" title="Modeled Default Risk Reserve Buffer">Risk Buffer</div>
+                </div>
+                <div class="allocation-footnotes">
+                  <span><span class="foot-dot bg-principal"></span> Principal: <strong>₹25,000</strong></span>
+                  <span><span class="foot-dot bg-profit"></span> Est. Net Profit: <strong id="foot-profit-val">+₹2,350</strong></span>
+                  <span><span class="foot-dot bg-loss"></span> Loss Reserve (LGD 35%): <strong id="foot-loss-val">-₹650</strong></span>
+                </div>
+              </div>
+            </section>
+
+            <!-- Credit Score Overview & Recent Simulation Activity Side Panel -->
+            <div class="intelligence-side-column">
+              <!-- Credit Score Distribution Overview Widget -->
+              <section class="fintech-widget-card" id="credit-overview-card" aria-label="Credit Score Overview">
+                <div class="widget-header">
+                  <div class="widget-title-wrap">
+                    <span class="tag-label">Credit Distribution</span>
+                    <h3 class="widget-heading">Borrower Credit Score Overview</h3>
+                  </div>
+                  <span class="score-badge-highlight" id="top5-avg-score-badge">Avg: 712 FICO</span>
+                </div>
+                <p class="widget-sub">Distribution of candidate profiles across standardized FICO credit risk tiers.</p>
+
+                <div class="credit-tier-bars" id="credit-tier-bars-container">
+                  <!-- Injected dynamically via JS with tier counts & security percentages -->
+                </div>
+              </section>
+
+              <!-- Recent Activity Feed Widget -->
+              <section class="fintech-widget-card" id="activity-feed-card" aria-label="Recent Simulation Activity">
+                <div class="widget-header">
+                  <div class="widget-title-wrap">
+                    <span class="tag-label">Live Audit Trail</span>
+                    <h3 class="widget-heading">Recent Simulation Activity</h3>
+                  </div>
+                  <span class="activity-live-badge">Real-time</span>
+                </div>
+                <p class="widget-sub">Chronological event stream of portfolio actions, parameter changes, and matching computations.</p>
+
+                <div class="activity-timeline" id="recent-activity-list">
+                  <!-- Populated dynamically via JS -->
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <!-- View Navigation Tabs (Top 5 vs All 25) -->
+          <div class="view-tabs-container" id="tabs-container">
+            <div class="view-tabs" role="tablist">
+              <button id="tab-top5" class="tab-btn active" role="tab" aria-selected="true" aria-controls="top5-section">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+                <span>Top 5 Matches</span>
+                <span class="tab-badge" id="top5-badge">5 Candidates</span>
+              </button>
+              <button id="tab-all" class="tab-btn" role="tab" aria-selected="false" aria-controls="all-section">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="8" y1="6" x2="21" y2="6"></line>
+                  <line x1="8" y1="12" x2="21" y2="12"></line>
+                  <line x1="8" y1="18" x2="21" y2="18"></line>
+                  <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                  <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                  <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+                <span>All 25 Borrowers Pool</span>
+                <span class="tab-badge secondary" id="all-count-badge">25</span>
+              </button>
+            </div>
+
+            <div class="ranking-algo-hint">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              <span>Deterministic ranking via Normalized Multi-Factor Utility Algorithm</span>
+            </div>
+          </div>
+
+          <!-- SECTION 1: Top 5 Matches View -->
+          <section id="top5-section" class="tab-view active" aria-label="Top 5 Borrower Recommendations">
+            <div class="section-title-row">
+              <div>
+                <h2 class="section-heading">Top 5 Recommended Borrowers</h2>
+                <p class="section-subheading">Ranked from highest to lowest suitability based on your ₹ capital and risk stance</p>
+              </div>
+              <div class="sort-tag">
+                <span>Algorithm:</span> <strong>Multi-Factor Fit Score (Best &rarr; 5th)</strong>
+              </div>
+            </div>
+
+            <!-- Conditional Notice When Fewer Than 5 Qualify -->
+            <div id="fewer-matches-banner" class="fewer-matches-alert hidden" role="status">
+              <div class="fewer-icon">⚠️</div>
+              <div class="fewer-body">
+                <strong id="fewer-matches-title">Notice: Fewer than 5 borrowers qualify</strong>
+                <p id="fewer-matches-reason">Only 3 borrowers met your criteria because strict tier filtering or credit score limits excluded the remaining profiles.</p>
+              </div>
+              <button type="button" id="broaden-filters-btn" class="fewer-action-btn">Broaden Filters</button>
+            </div>
+
+            <!-- Top 5 Borrower Cards Grid -->
+            <div id="top5-cards-container" class="cards-grid">
+              <!-- Dynamically populated top 5 borrower cards -->
+            </div>
+
+            <!-- Empty State Container (If 0 qualify) -->
+            <div id="empty-state-container" class="empty-state-card hidden">
+              <div class="empty-icon">🔍</div>
+              <h3>No Qualifying Borrowers Found</h3>
+              <p id="empty-state-desc">No borrowers in the pool match your current strict filters and investment amount. Try broadening your credit score limit or disabling strict tier filtering.</p>
+              <button type="button" id="empty-reset-btn" class="primary-btn">Reset All Filters to Default</button>
+            </div>
+          </section>
+
+          <!-- SECTION 2: All 25 Borrowers Ranked Pool View -->
+          <section id="all-section" class="tab-view hidden" aria-label="All 25 Borrowers Pool">
+            <div class="section-title-row">
+              <div>
+                <h2 class="section-heading">All 25 Borrowers Ranked by Fit Score</h2>
+                <p class="section-subheading">Inspect where each candidate stands in the entire 25-borrower pool under your current settings</p>
+              </div>
+              <div class="filter-controls">
+                <label for="table-risk-filter" class="sr-only">Filter table by risk</label>
+                <select id="table-risk-filter" class="filter-select">
+                  <option value="all">All Risk Levels (25)</option>
+                  <option value="Low">Low Risk Only</option>
+                  <option value="Medium">Medium Risk Only</option>
+                  <option value="High">High Risk Only</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table class="borrowers-table" aria-label="All Borrowers Table">
+                <thead>
+                  <tr>
+                    <th scope="col" class="th-rank">Rank</th>
+                    <th scope="col">Borrower Profile</th>
+                    <th scope="col">Loan Purpose &amp; Location</th>
+                    <th scope="col">Requested Loan</th>
+                    <th scope="col">Interest Rate</th>
+                    <th scope="col">Repayment Prob.</th>
+                    <th scope="col">Risk Level</th>
+                    <th scope="col">Est. Net ROI</th>
+                    <th scope="col">Match Score</th>
+                    <th scope="col">Ranking Rationale</th>
+                    <th scope="col" class="th-action">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="all-borrowers-tbody">
+                  <!-- Dynamically populated 25 borrowers table -->
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Financial Disclaimer & Algorithm Documentation Box -->
+          <section class="disclaimer-callout-card" id="methodology-section" aria-label="Legal & Financial Disclaimers">
+            <div class="disclaimer-header">
+              <div class="disclaimer-title-wrap">
+                <span class="disclaimer-icon">⚠️</span>
+                <h4>Financial Disclaimers &amp; Transparent ROI Methodology</h4>
+              </div>
+              <button type="button" id="toggle-methodology-btn" class="text-btn">View Formula Details &darr;</button>
+            </div>
+            <p class="disclaimer-body">
+              <strong>Important Notice:</strong> Estimated annual returns displayed on Credit Scout are probabilistic statistical models and <strong>do not constitute guaranteed returns</strong>. All peer-to-peer micro-lending investments carry risk of capital loss and borrower default. Credit Scout does not provide registered investment advisory services.
+            </p>
+            <div id="methodology-drawer" class="methodology-drawer hidden">
+              <div class="formula-block">
+                <div class="formula-item">
+                  <strong>1. Expected Net ROI Formula:</strong>
+                  <code>Net ROI (%) = (Repayment Probability × Interest Rate) - ((1 - Repayment Probability) × LGD)</code>
+                  <p>Where <em>LGD (Loss Given Default)</em> is modeled conservatively at 35% to reflect partial amortized repayments collected prior to default and recovery proceedings.</p>
+                </div>
+                <div class="formula-item">
+                  <strong>2. Projected Profit on Investor Capital:</strong>
+                  <code>Projected Profit (₹) = Investment Amount (₹) × (Expected Net ROI / 100)</code>
+                </div>
+                <div class="formula-item">
+                  <strong>3. Multi-Factor Match Score:</strong>
+                  <code>Match Score = 100 × (w₁ · Safety + w₂ · Credit Score + w₃ · Risk Alignment + w₄ · Yield)</code>
+                  <p>Weights dynamically rebalance based on your chosen risk profile (Low, Medium, or High).</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+
+      <!-- Footer -->
+      <footer class="app-footer">
+        <div class="footer-container">
+          <div class="footer-copy">
+            <strong>Credit Scout</strong> &copy; 2026. Institutional P2P Lending Matchmaker. Built with vanilla HTML5, CSS3 &amp; ES6.
+          </div>
+          <div class="footer-links">
+            <span class="footer-badge">25 Demo Profiles</span>
+            <span class="footer-badge">Deterministic Utility Engine</span>
+            <span class="footer-badge">Pure Vanilla Stack</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Investment Simulator & Schedule Breakdown Modal -->
+  <div id="loan-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-header-left">
+          <span id="modal-rank-badge" class="badge badge-medium">#1 Fit</span>
+          <h3 id="modal-title" class="modal-heading">Borrower Details</h3>
+        </div>
+        <button id="modal-close" class="modal-close-btn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <div class="modal-body" id="modal-body-content">
+        <!-- Dynamically injected loan breakdown in INR -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
