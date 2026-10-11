@@ -1,0 +1,236 @@
+/* Credit Scout - Modern Fintech Theme Styles */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --primary-glow: rgba(16, 185, 129, 0.18);
+  --accent-glow: rgba(59, 130, 246, 0.15);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #0b0f17;
+  color: #e2e8f0;
+  overscroll-behavior-y: none;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Glassmorphism cards */
+.glass-panel {
+  background: rgba(17, 24, 39, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-subtle {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .glass-card-hover:hover {
+    transform: translateY(-2px);
+    border-color: rgba(52, 211, 153, 0.35);
+    box-shadow: 0 12px 30px -10px rgba(16, 185, 129, 0.2);
+  }
+}
+
+/* Touch Friendly Buttons */
+button, select, input {
+  touch-action: manipulation;
+}
+
+/* Hide scrollbars for clean horizontal swipes */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Scrollbar for desktop */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Custom Range Slider with touch-friendly thumb */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 10px;
+  background: #1e293b;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 28px;
+  width: 28px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.8), 0 0 0 4px rgba(16, 185, 129, 0.2);
+  margin-top: -9px;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+@media (max-width: 640px) {
+  input[type="range"]::-webkit-slider-thumb {
+    height: 32px;
+    width: 32px;
+    margin-top: -11px;
+  }
+}
+
+input[type="range"]::-webkit-slider-thumb:hover,
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.15);
+  background: #34d399;
+}
+
+input[type="range"]:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 18px rgba(16, 185, 129, 0.9), 0 0 0 6px rgba(16, 185, 129, 0.3);
+}
+
+/* Rank Medals */
+.rank-badge-1 {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.4);
+}
+
+.rank-badge-2 {
+  background: linear-gradient(135deg, #94a3b8, #64748b);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(148, 163, 184, 0.3);
+}
+
+.rank-badge-3 {
+  background: linear-gradient(135deg, #b45309, #78350f);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(180, 83, 9, 0.3);
+}
+
+.rank-badge-other {
+  background: #1e293b;
+  color: #94a3b8;
+  border: 1px solid #334155;
+}
+
+/* Mobile Bottom Safe Area */
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
+/* Modal Bottom-Sheet animation on mobile */
+@keyframes slide-up-mobile {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-sheet {
+  animation: slide-up-mobile 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reminder Alert Glow */
+.reminder-pulse {
+  animation: reminderGlow 2.5s infinite;
+}
+
+@keyframes reminderGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(245, 158, 11, 0.3);
+    border-color: rgba(245, 158, 11, 0.7);
+  }
+}
+
+/* Reverse Rebate Shimmer & Glow */
+.rebate-glow {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(99, 102, 241, 0.12));
+  border: 1px solid rgba(52, 211, 153, 0.35);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+.rebate-tier-badge {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.35);
+}
+
+.rebate-tier-gold {
+  background: linear-gradient(135deg, #fbbf24, #d97706);
+  color: #0f172a;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.4);
+}
+
+.rebate-tier-silver {
+  background: linear-gradient(135deg, #cbd5e1, #64748b);
+  color: #0f172a;
+  box-shadow: 0 0 12px rgba(148, 163, 184, 0.3);
+}
+
+.rebate-tier-bronze {
+  background: linear-gradient(135deg, #d97706, #78350f);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(180, 83, 9, 0.3);
+}
+
+.streak-flame {
+  display: inline-block;
+  animation: flameBurn 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes flameBurn {
+  0% { transform: scale(1) rotate(-2deg); filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.6)); }
+  100% { transform: scale(1.15) rotate(3deg); filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.8)); }
+}
+
+.rebate-applied-badge {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.25));
+  border: 1px solid rgba(16, 185, 129, 0.6);
+  animation: rebatePulse 2s infinite;
+}
+
+@keyframes rebatePulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(16, 185, 129, 0.3); }
+  50% { box-shadow: 0 0 18px rgba(16, 185, 129, 0.6); }
+}
+

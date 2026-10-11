@@ -1,0 +1,19 @@
+{
+  "name": "credit-scout",
+  "version": "1.0.0",
+  "description": "Automated Peer-to-Peer Micro-Lending Matchmaker",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "fintech",
+    "p2p-lending",
+    "micro-lending",
+    "credit-scout",
+    "algorithmic-matching"
+  ],
+  "author": "Credit Scout Team",
+  "license": "MIT"
+}
